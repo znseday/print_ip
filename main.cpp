@@ -20,7 +20,8 @@ int main()
     MyPrintIp<char>(-1);
     MyPrintIp<short>(0);
     MyPrintIp<int>(2130706433);
-    MyPrintIp<__int64>(8875824491850138409);
+    //MyPrintIp<__int64>(8875824491850138409); // travis doesn't know __int64 (((
+    MyPrintIp<long long>(8875824491850138409);
 
 //    MyPrintIp(2130706433ul); // additional test for unsigned type
 
