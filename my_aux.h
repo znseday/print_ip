@@ -51,8 +51,13 @@ void MyPrintIp(T ip, typename enable_if<is_integral<T>::value>::type* = 0)
         cout << ((ip>>i) & mask) << ((i>0)? "." : "\n");
 }
 
-template<class T>
-void MyPrintIp(const string &ip, typename enable_if<is_class<T>::value>::type* = 0)
+//template<class T>
+//void MyPrintIp(const string &ip, typename enable_if<is_class<T>::value>::type* = 0)
+//{
+//    cout << ip << endl;
+//}
+
+void MyPrintIp(const string &ip)
 {
     cout << ip << endl;
 }
@@ -70,7 +75,6 @@ void MyPrintIp(T ip)
 {
     for (auto it = ip.cbegin(); it != ip.cend(); )
     {
-//      cout << *it << ((it < (ip.cend()-1))? "." : "\n"); // 'it-1' doesn't work for list (((
         cout << *it++;
         if (it != ip.cend())
             cout << ".";
@@ -84,9 +88,39 @@ void MyPrintIp(T ip)
 //    cout << ip << endl;
 //}
 
-// something for tuple there...
 
+template<int P, typename ...Args>
+void HelperPrintIp(tuple<Args...> &t)
+{
+    cout << get<P>(t);
 
+    if constexpr (P < tuple_size<tuple<Args...>>::value-1)
+    {
+        //    static_assert (   // doesn't work (((
+        //     is_same_v<tuple_element<P, typename remove_reference<decltype(t)>::type>::type,
+        //               tuple_element<P+1, typename remove_reference<decltype(t)>::type>::type>
+        //     , "q");
+
+         static_assert (
+             is_same_v<typename tuple_element<P, tuple<Args...>>::type ,
+                       typename tuple_element<P+1, tuple<Args...>>::type >
+             , "!!! Incompatible types !!!");
+
+        cout << ".";
+        HelperPrintIp<P+1>(t);
+    }
+    else
+        cout << endl;
+}
+
+template<typename ...Args>
+void MyPrintIp(tuple<Args...> &t)
+{
+//    cout << MY_P_FUNC << endl;
+//    cout << "It's tuple" << endl;
+
+    HelperPrintIp<0>(t);
+}
 
 
 
