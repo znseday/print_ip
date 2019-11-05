@@ -102,8 +102,8 @@ void HelperPrintIp(tuple<Args...> &t)
         //     , "q");
 
          static_assert (
-             is_same_v<typename tuple_element<P, tuple<Args...>>::type ,
-                       typename tuple_element<P+1, tuple<Args...>>::type >
+             is_same<typename tuple_element<P, tuple<Args...>>::type ,
+                       typename tuple_element<P+1, tuple<Args...>>::type >::value
              , "!!! Incompatible types !!!");
 
         cout << ".";
