@@ -27,4 +27,4 @@ deploy:
      keep_history: true
      local_dir: ./html
      on:
-      branch: master
+       branch: master
