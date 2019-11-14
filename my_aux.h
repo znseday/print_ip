@@ -1,3 +1,8 @@
+//!  my_aux.h
+/*!
+    This file contains MyPrintIp function to print ip adresses.
+*/
+
 #pragma once
 
 #include <iostream>
@@ -38,6 +43,10 @@ using namespace std;
 //   cout << ip << endl;
 //}
 
+/**
+    @brief Function MyPrintIp for integral types
+    @param ip -- ip address represented as a integral variable
+*/
 template<class T> // such an idea about unsued parameter is taken from cppreference
 void MyPrintIp(T ip, typename enable_if<is_integral<T>::value>::type* = 0)
 {
@@ -57,6 +66,10 @@ void MyPrintIp(T ip, typename enable_if<is_integral<T>::value>::type* = 0)
 //    cout << ip << endl;
 //}
 
+/**
+    @brief Function MyPrintIp for std::string
+    @param ip -- ip address represented as a std::string
+*/
 void MyPrintIp(const string &ip)
 {
     cout << ip << endl;
@@ -70,6 +83,10 @@ void MyPrintIp(const string &ip)
 //        cout << *it << ((it < (ip.cend()-1))? "." : "\n");
 //}
 
+/**
+    @brief Function MyPrintIp for containers wich supports iterators
+    @param ip -- ip address represented as a containers
+*/
 template<class T, class = typename enable_if<is_class<T>::value>::type >
 void MyPrintIp(T ip)
 {
@@ -88,7 +105,11 @@ void MyPrintIp(T ip)
 //    cout << ip << endl;
 //}
 
-
+/**
+    @brief Function HelperPrintIp is a helper for MyPrintIp and helps to handle std::tuple type
+    @param t -- ip address represented as std::tuple
+    @see MyPrintIp()
+*/
 template<int P, typename ...Args>
 void HelperPrintIp(tuple<Args...> &t)
 {
@@ -102,8 +123,8 @@ void HelperPrintIp(tuple<Args...> &t)
         //     , "q");
 
          static_assert (
-             is_same<typename tuple_element<P, tuple<Args...>>::type ,
-                       typename tuple_element<P+1, tuple<Args...>>::type >::value
+             is_same_v<typename tuple_element<P, tuple<Args...>>::type ,
+                       typename tuple_element<P+1, tuple<Args...>>::type >
              , "!!! Incompatible types !!!");
 
         cout << ".";
@@ -113,6 +134,11 @@ void HelperPrintIp(tuple<Args...> &t)
         cout << endl;
 }
 
+/**
+    @brief Function MyPrintIp for std::tuple type
+    @see HelperPrintIp()
+    @param t -- ip address represented as std::tuple
+*/
 template<typename ...Args>
 void MyPrintIp(tuple<Args...> &t)
 {

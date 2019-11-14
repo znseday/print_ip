@@ -8,6 +8,9 @@
 
 using namespace std;
 
+/**
+    @brief This main function shows how MyPrintIp works
+*/
 int main()
 {
 #if (defined WIN32) || (defined WIN64)
@@ -41,7 +44,7 @@ int main()
     //MyPrintIp<list<int>>(l);
     MyPrintIp(l);
 
-    //auto t = make_tuple(150, 100, 50, '0', 200ul); // causes "Incompatible types"
+    //auto t = make_tuple(150, 100, 50, '0', 200ul); // causes "Incompatible types" as it's supposed to do
     auto t = make_tuple(150, 100, 50, 0, 1);
     MyPrintIp(t);
 
